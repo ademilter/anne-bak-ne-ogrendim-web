@@ -1,0 +1,27 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "cross-env NEXT_PROD=true next build",
+    "start": "cross-env NEXT_PROD=true next start"
+  },
+  "dependencies": {
+    "date-fns": "^2.9.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.2.0",
+    "next-offline": "^4.0.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.7",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "cross-env": "^6.0.3",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.4"
+  }
+}
