@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
-import { formatDistance } from 'date-fns'
+import { formatDistanceStrict } from 'date-fns'
 import { tr } from 'date-fns/locale'
 import { NextPage } from 'next'
 import { Article, Tag } from '../interfaces'
@@ -12,49 +12,78 @@ type Props = {
   tags: Tag[]
 }
 
-const IndexPage: NextPage<Props> = ({ articles, tags }) => {
-  console.log(tags)
+const IndexPage: NextPage<Props> = ({ articles }) => {
   return (
     <Layout>
       {articles.map(article => (
-        <div className="article" key={article.id}>
-          <h3>
-            <Link href={`article/${article.slug}`}>
-              <a>{article.title}</a>
-            </Link>
-          </h3>
-          <ul className="meta">
-            <li>
-              <Link href={`user/${article.user.username}`}>
-                <a>{article.user.username}</a>
-              </Link>
-            </li>
-            <li>
-              {formatDistance(new Date(article.created_at), new Date(), {
-                locale: tr
+        <article className="article" key={article.id}>
+          <div className="article-date">
+            <small>
+              {formatDistanceStrict(new Date(article.created_at), new Date(), {
+                locale: tr,
+                addSuffix: true
               })}
-            </li>
-            <li>
-              {article.tags.map(tag => (
-                <Link key={tag.id} href={`tag/${tag.slug}`}>
-                  <a>{tag.name}</a>
-                </Link>
-              ))}
-            </li>
-          </ul>
-        </div>
+            </small>
+          </div>
+
+          <div className="article-body">
+            <h4 className="article-title">
+              <Link href={`article/${article.slug}`}>
+                <a>{article.title}</a>
+              </Link>
+            </h4>
+            <div className="article-meta">
+              <Link href={`user/${article.user.username}`}>
+                <a className="meta-item">{article.user.username}</a>
+              </Link>
+
+              <div className="meta-item">
+                {article.tags.map(tag => (
+                  <Link key={tag.id} href={`tag/${tag.slug}`}>
+                    <a className="tag">#{tag.name}</a>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
       ))}
       <style jsx>
         {`
           .article {
-            padding: 20px;
-            border-bottom: 1px solid #ddd;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #444;
           }
-          .meta {
+          .article-date {
+            color: #999;
+          }
+          .article-title {
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+          .article-meta {
             display: flex;
+            align-items: center;
           }
-          .meta li {
-            margin-right: 10px;
+          .article-meta a {
+            //color: inherit;
+          }
+          .meta-item {
+            display: inline-flex;
+          }
+          .meta-item + .meta-item:before {
+            content: '·';
+            margin-right: 5px;
+            margin-left: 5px;
+          }
+          .tag:not(:last-child):after {
+            content: ',';
+          }
+          .tag + .tag {
+            margin-left: 5px;
           }
         `}
       </style>
