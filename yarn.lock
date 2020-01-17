@@ -5517,6 +5517,11 @@ traverse@0.6.6:
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
+trix@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-1.2.2.tgz#bb2afacb981df9a6edb49bc66f57427b9728909d"
+  integrity sha512-xNWwKDa1PG5do/qV3FRESXjM17U5ACB9Ih+x4mylLYfAgmYYTA17ExVdrrA7vCJ5J9nS1tVZFyhVTPgPTtIFVg==
+
 ts-pnp@^1.1.2:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.5.tgz#840e0739c89fce5f3abd9037bb091dbff16d9dec"
