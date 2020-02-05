@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-// import fetch from 'isomorphic-unfetch'
 import dynamic from 'next/dynamic'
 import { NextPage } from 'next'
 import Router from 'next/router'
-// import { Article, Tag } from '../interfaces'
+import fetch from '../utils/fetch'
+
 import Layout from '../components/layout'
 
 const Editor = dynamic(() => import('../components/editor'), {
@@ -11,7 +11,6 @@ const Editor = dynamic(() => import('../components/editor'), {
 })
 
 /*
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 {
   "title": "hello 34",
   "content": "deneme açıklama olsun b\n\nhelllladsas ",
@@ -23,21 +22,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 type Props = {}
 
 const NewArticlePage: NextPage<Props> = () => {
-  const [ready, setReady] = useState(false)
+  const [isLogin, setLogin] = useState(false)
+
+  async function check() {
+    try {
+      if (!localStorage.getItem('TOKEN')) throw 'Token yok'
+      const { data } = await fetch('/users/me')
+      console.log(data)
+      setLogin(true)
+    } catch (e) {
+      console.log(e)
+      await Router.push('/')
+    }
+  }
 
   useEffect(() => {
-    if (localStorage.getItem('TOKEN')) {
-      setReady(true)
-    } else {
-      Router.push('/')
-    }
+    check()
   }, [])
 
-  return ready ? (
+  return isLogin ? (
     <Layout>
       <Editor />
     </Layout>
-  ) : null
+  ) : (
+    <div>Loading...</div>
+  )
 }
 
 export default NewArticlePage
