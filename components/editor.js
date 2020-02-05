@@ -5,14 +5,22 @@ function Editor({ onChange = () => {} }) {
   const trixInput = React.createRef()
 
   useEffect(() => {
-    trixInput.current.addEventListener('trix-change', event => {
-      onChange(event.target.innerHTML)
+    const editor = trixInput.current.editor
+    editor.deactivateAttribute("bold")
+
+    // load localStore
+    editor.loadJSON(JSON.parse(localStorage['editorState']))
+
+    // change trigger
+    trixInput.current.addEventListener('trix-change', () => {
+      // save localStore
+      localStorage['editorState'] = JSON.stringify(editor)
+      onChange(editor)
     })
   }, [])
 
   return (
     <div className="editor">
-      {/*<style dangerouslySetInnerHTML={{ __html: style }} />*/}
       <input type="hidden" id="trix" />
       <trix-editor placeholder="Hello" input="trix" ref={trixInput} />
     </div>
