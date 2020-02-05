@@ -1,5 +1,5 @@
 import * as React from 'react'
-import fetch from 'isomorphic-unfetch'
+import fetch from '../../../utils/fetch'
 import { NextPage, NextPageContext } from 'next'
 import { User } from '../../../interfaces'
 import Layout from '../../../components/layout'
@@ -20,10 +20,8 @@ const UserPage: NextPage<Props> = ({ user }) => {
 }
 
 UserPage.getInitialProps = async ({ query }: NextPageContext) => {
-  const response = await fetch(
-    `${process.env.API_URL}/users?username=${query.id}`
-  )
-  const user: User[] = await response.json()
+  const { data } = await fetch(`/users?username=${query.id}`)
+  const user: User[] = data
   if (user.length === 0) {
     return {}
   }

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import fetch from 'isomorphic-unfetch'
+import fetch from '../../../utils/fetch'
 import { NextPage, NextPageContext } from 'next'
 import ErrorPage from 'next/error'
 import { Article } from '../../../interfaces'
@@ -20,10 +20,8 @@ const ArticlePage: NextPage<Props> = ({ article }) => {
 }
 
 ArticlePage.getInitialProps = async ({ query }: NextPageContext) => {
-  const response = await fetch(
-    `${process.env.API_URL}/articles?slug=${query.id}`
-  )
-  const article: Article[] = await response.json()
+  const { data } = await fetch(`/articles?slug=${query.id}`)
+  const article: Article[] = data
   if (article.length === 0) {
     return {}
   }

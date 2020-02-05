@@ -1,5 +1,5 @@
 import * as React from 'react'
-import fetch from 'isomorphic-unfetch'
+import fetch from '../../../utils/fetch'
 import { NextPage, NextPageContext } from 'next'
 import { Tag } from '../../../interfaces'
 import Layout from '../../../components/layout'
@@ -20,8 +20,8 @@ const TagPage: NextPage<Props> = ({ tag }) => {
 }
 
 TagPage.getInitialProps = async ({ query }: NextPageContext) => {
-  const response = await fetch(`${process.env.API_URL}/tags?slug=${query.id}`)
-  const tag: Tag[] = await response.json()
+  const { data } = await fetch(`/tags?slug=${query.id}`)
+  const tag: Tag[] = data
   if (tag.length === 0) {
     return {}
   }

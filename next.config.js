@@ -3,8 +3,7 @@ const withOffline = require('next-offline')
 const config = {
   env: {
     API_URL: process.env.NEXT_PROD
-      ? 'http://localhost:1337'
-      // ? 'https://anne-bak-ne-ogrendim.herokuapp.com'
+      ? 'https://anne-bak-ne-ogrendim.herokuapp.com'
       : 'http://localhost:1337'
   },
   workboxOpts: {
