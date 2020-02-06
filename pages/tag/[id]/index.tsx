@@ -1,5 +1,5 @@
 import * as React from 'react'
-import fetch from '../../../utils/fetch'
+import service from '../../../utils/service'
 import { NextPage, NextPageContext } from 'next'
 import { Tag } from '../../../interfaces'
 import Layout from '../../../components/layout'
@@ -20,7 +20,11 @@ const TagPage: NextPage<Props> = ({ tag }) => {
 }
 
 TagPage.getInitialProps = async ({ query }: NextPageContext) => {
-  const { data } = await fetch(`/tags?slug=${query.id}`)
+  const { data } = await service.get('/tags', {
+    params: {
+      slug: query.id
+    }
+  })
   const tag: Tag[] = data
   if (tag.length === 0) {
     return {}

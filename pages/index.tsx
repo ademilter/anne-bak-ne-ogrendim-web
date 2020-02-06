@@ -1,10 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import fetch from 'isomorphic-unfetch'
 import { formatDistanceStrict } from 'date-fns'
 import { tr } from 'date-fns/locale'
 import { NextPage } from 'next'
+
+import service from '../utils/service'
 import { Article, Tag } from '../interfaces'
+
 import Layout from '../components/layout'
 
 type Props = {
@@ -92,15 +94,33 @@ const IndexPage: NextPage<Props> = ({ articles }) => {
 }
 
 IndexPage.getInitialProps = async () => {
-  const _articles = fetch(
-    `${process.env.API_URL}/articles?_start=0&_limit=10&_sort=created_at:DESC`
-  )
-  const _tags = fetch(
-    `${process.env.API_URL}/tags?_start=0&_limit=10&_sort=created_at:DESC`
-  )
-  const [resArticles, resTags] = await Promise.all([_articles, _tags])
-  const articles: Article[] = await resArticles.json()
-  const tags: Tag[] = await resTags.json()
+  let articles: Article[] = []
+  let tags: Tag[] = []
+
+  try {
+    const getArticles = () =>
+      service.get('/articles', {
+        params: {
+          _start: 0,
+          _limit: 10,
+          _sort: 'created_at:DESC'
+        }
+      })
+    const getTags = () =>
+      service.get('/tags', {
+        params: {
+          _start: 0,
+          _limit: 10,
+          _sort: 'created_at:DESC'
+        }
+      })
+    const [resArticles, resTags] = await Promise.all([getArticles(), getTags()])
+    articles = resArticles.data
+    tags = resTags.data
+  } catch (e) {
+    console.log(e.message)
+  }
+
   return { articles, tags }
 }
 

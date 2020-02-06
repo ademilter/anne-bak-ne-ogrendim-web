@@ -1,5 +1,5 @@
 import * as React from 'react'
-import fetch from '../../../utils/fetch'
+import service from '../../../utils/service'
 import { NextPage, NextPageContext } from 'next'
 import ErrorPage from 'next/error'
 import { Article } from '../../../interfaces'
@@ -20,7 +20,11 @@ const ArticlePage: NextPage<Props> = ({ article }) => {
 }
 
 ArticlePage.getInitialProps = async ({ query }: NextPageContext) => {
-  const { data } = await fetch(`/articles?slug=${query.id}`)
+  const { data } = await service.get('/articles', {
+    params: {
+      slug: query.id
+    }
+  })
   const article: Article[] = data
   if (article.length === 0) {
     return {}

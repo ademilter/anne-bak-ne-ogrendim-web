@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { NextPage } from 'next'
 import Router from 'next/router'
-import fetch from '../utils/fetch'
+import service from '../utils/service'
 
 import Layout from '../components/layout'
 
@@ -26,8 +26,14 @@ const NewArticlePage: NextPage<Props> = () => {
 
   async function check() {
     try {
-      if (!localStorage.getItem('TOKEN')) throw 'Token yok'
-      const { data } = await fetch('/users/me')
+      const token = localStorage.getItem('TOKEN')
+      if (!token) throw 'Token yok'
+
+      const { data } = await service.get('/users/me', {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
       console.log(data)
       setLogin(true)
     } catch (e) {

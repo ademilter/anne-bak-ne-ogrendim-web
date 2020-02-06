@@ -1,9 +1,10 @@
 import * as React from 'react'
-import fetch from '../../../utils/fetch'
 import { NextPage, NextPageContext } from 'next'
+import ErrorPage from 'next/error'
+
+import service from '../../../utils/service'
 import { User } from '../../../interfaces'
 import Layout from '../../../components/layout'
-import ErrorPage from 'next/error'
 
 type Props = {
   user?: User
@@ -20,7 +21,11 @@ const UserPage: NextPage<Props> = ({ user }) => {
 }
 
 UserPage.getInitialProps = async ({ query }: NextPageContext) => {
-  const { data } = await fetch(`/users?username=${query.id}`)
+  const { data } = await service.get('/users', {
+    params: {
+      username: query.id
+    }
+  })
   const user: User[] = data
   if (user.length === 0) {
     return {}
