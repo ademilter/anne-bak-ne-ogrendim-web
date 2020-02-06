@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
+import { NextPage } from 'next'
 import { formatDistanceStrict } from 'date-fns'
 import { tr } from 'date-fns/locale'
-import { NextPage } from 'next'
 
-import service from '../utils/service'
-import { Article, Tag } from '../interfaces'
+import service from '@utils/service'
+import { Article, Tag } from '@interfaces/index'
 
-import Layout from '../components/layout'
+import Layout from '@components/layout'
 
 type Props = {
   articles: Article[]

@@ -1,9 +1,10 @@
 import * as React from 'react'
-import service from '../../../utils/service'
 import { NextPage, NextPageContext } from 'next'
-import { Tag } from '../../../interfaces'
-import Layout from '../../../components/layout'
 import ErrorPage from 'next/error'
+
+import service from '@utils/service'
+import { Tag } from '@interfaces/index'
+import Layout from '@components/layout'
 
 type Props = {
   tag?: Tag

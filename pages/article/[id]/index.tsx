@@ -1,9 +1,10 @@
 import * as React from 'react'
-import service from '../../../utils/service'
 import { NextPage, NextPageContext } from 'next'
 import ErrorPage from 'next/error'
-import { Article } from '../../../interfaces'
-import Layout from '../../../components/layout'
+
+import service from '@utils/service'
+import { Article } from '@interfaces/index'
+import Layout from '@components/layout'
 
 type Props = {
   article?: Article

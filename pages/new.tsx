@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { NextPage } from 'next'
 import Router from 'next/router'
-import service from '../utils/service'
 
-import Layout from '../components/layout'
+import service from '@utils/service'
+import Layout from '@components/layout'
 
-const Editor = dynamic(() => import('../components/editor'), {
+const Editor = dynamic(() => import('@components/editor'), {
   ssr: false
 })
 

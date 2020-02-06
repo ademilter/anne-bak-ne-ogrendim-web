@@ -2,9 +2,9 @@ import * as React from 'react'
 import { NextPage, NextPageContext } from 'next'
 import ErrorPage from 'next/error'
 
-import service from '../../../utils/service'
-import { User } from '../../../interfaces'
-import Layout from '../../../components/layout'
+import service from '@utils/service'
+import { User } from '@interfaces/index'
+import Layout from '@components/layout'
 
 type Props = {
   user?: User
