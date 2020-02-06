@@ -6,15 +6,18 @@ function Editor({ onChange = () => {} }) {
 
   useEffect(() => {
     const editor = trixInput.current.editor
-    editor.deactivateAttribute("bold")
+    editor.deactivateAttribute('bold')
 
     // load localStore
-    editor.loadJSON(JSON.parse(localStorage['editorState']))
+    const cacheEditorState = localStorage['EDITOR_STATE']
+    if (cacheEditorState) {
+      editor.loadJSON(JSON.parse(cacheEditorState))
+    }
 
     // change trigger
     trixInput.current.addEventListener('trix-change', () => {
       // save localStore
-      localStorage['editorState'] = JSON.stringify(editor)
+      localStorage['EDITOR_STATE'] = JSON.stringify(editor)
       onChange(editor)
     })
   }, [])
