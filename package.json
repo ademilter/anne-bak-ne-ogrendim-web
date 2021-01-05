@@ -9,7 +9,7 @@
     "start": "cross-env NEXT_PROD=true next start"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "date-fns": "^2.9.0",
     "next": "^9.2.0",
     "next-offline": "^4.0.6",
